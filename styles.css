@@ -232,25 +232,24 @@ main {
 
 .content-section {
     display: none;
-    animation: fadeIn 0.5s ease-in-out;
     padding: 30px;
     text-align: center;
-    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .content-section.active {
     display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-.content-section:not(.active) {
-    opacity: 0;
-    transform: translateY(20px);
+    animation: slideInFade 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+@keyframes slideInFade {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Botón Flotante de Modo Oscuro */
@@ -376,16 +375,61 @@ main {
     border-radius: var(--border-radius);
 }
 
+/* Diseño 3x3 (3-3-3) para Recuerdos V3 */
+.gallery-recuerdos-v3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px; /* Separación reducida (no tan separado) */
+    padding: 20px;
+}
+
+.gallery-recuerdos-v3 .gallery-item {
+    aspect-ratio: 4 / 5; /* Formato vertical fijo de la misma medida */
+    width: 100%;
+    border: 3px solid var(--color-primary); /* Divisores de color rosado */
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Asegura que la imagen no se salga del borde curvo */
+}
+
+.gallery-recuerdos-v3 .gallery-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Efecto zoom sin deformar */
+    display: block;
+    border-radius: 0; /* Remueve radio interno para que el contenedor lo maneje */
+}
+
+@media (max-width: 900px) {
+    .gallery-recuerdos-v3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-recuerdos-v3 {
+        grid-template-columns: 1fr;
+    }
+}
+
 .gallery-description {
     position: absolute;
     bottom: -100%;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: var(--color-text-light);
-    padding: 10px;
+    /* Fondo rosadito degradado */
+    background: linear-gradient(to top, rgba(233, 30, 99, 0.95), rgba(255, 128, 171, 0.8));
+    /* Letras con relleno rosado fuerte y borde blanco */
+    color: var(--color-primary);
+    text-shadow: 
+        -1px -1px 0 #fff,  
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff;
+    font-weight: bold;
+    font-size: 1.15rem;
+    padding: 15px 10px;
     text-align: center;
-    transition: bottom 0.3s ease;
+    transition: bottom 0.4s ease-out; /* Transición más suave */
     border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
@@ -393,15 +437,34 @@ main {
     bottom: 0;
 }
 
-/* Estilos generales para la sección */
-#recuerdos {
-    padding: 2rem;
+/* Lógica de navegación SPA y Unificación de Layout (.content-section maestro) */
+.content-section {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+    padding: 3rem 2.5rem;
     background-color: var(--color-background);
     color: var(--color-text);
     border-radius: var(--border-radius);
     margin: 2rem auto;
-    max-width: 1200px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 950px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-border);
+}
+
+.content-section.active {
+    display: block;
+}
+
+.dark-mode .content-section {
+    background-color: var(--color-secondary);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Estilos de la sección Recuerdos (Hereda el layout unificado) */
+#recuerdos {
+    /* Transparente: hereda el max-width, shadows y padding de .content-section */
+    text-align: center;
 }
 
 #recuerdos h2 {
@@ -422,6 +485,8 @@ main {
 .timeline {
     position: relative;
     padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .timeline::before {
@@ -446,11 +511,11 @@ main {
 }
 
 .timeline-event:nth-child(odd) {
-    margin-left: 55%;
+    align-self: flex-start;
 }
 
 .timeline-event:nth-child(even) {
-    margin-right: 55%;
+    align-self: flex-end;
 }
 
 .timeline-event h3 {
@@ -517,51 +582,23 @@ main {
     color: var(--color-primary);
 }
 
-/* Modo oscuro */
-.dark-mode #recuerdos {
-    background-color: var(--color-background);
-    color: var(--color-text);
+/* Estilos generales para la sección de frases (Hereda el layout unificado) */
+#frases {
+    text-align: center;
 }
 
-.dark-mode .timeline-event {
-    background-color: var(--color-secondary);
-}
-
-.dark-mode .timeline::before {
-    background-color: var(--color-primary);
-}
-
-.dark-mode .playlist a {
-    color: var(--color-text-light);
-}
-
-.dark-mode .playlist a:hover {
+#frases h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     color: var(--color-primary);
 }
 
-/* Estilos generales para la sección */
-#mensajes {
-    padding: 2rem;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-    color: var(--color-text-light);
-    border-radius: var(--border-radius);
-    margin: 2rem auto;
-    max-width: 800px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#mensajes h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-text-light);
-}
-
 .mensaje-container {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 1.5rem;
+    background-color: rgba(255, 192, 203, 0.15); /* Fondo suave rosado en vez de semi-transparente oscuro */
+    padding: 2.5rem;
     border-radius: var(--border-radius);
     display: inline-block;
+    border: 2px dashed var(--color-primary);
 }
 
 #mensaje-texto {
@@ -595,92 +632,107 @@ main {
     background-color: var(--color-secondary);
 }
 
-/* Modo oscuro */
-.dark-mode #mensajes {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-}
+/* Modo oscuro manejado por .content-section */
 
-.dark-mode .mensaje-container {
-    background-color: rgba(0, 0, 0, 0.2);
-}
+/* ---- ANIMACIONES 14 DE FEBRERO ---- */
 
-/*seccion nuestras fotos - colage*/
-.collage-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    padding: 20px;
-    background-color: var(--color-background); /* Fondo del contenedor */
-}
-
-.collage-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--border-radius); /* Bordes curvos */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--color-border); /* Borde del collage */
-}
-
-.collage-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.collage-item:hover img {
-    transform: scale(1.1);
-}
-
-.overlay {
-    position: absolute;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
-    color: var(--color-text-light); /* Texto claro */
-    width: 100%;
-    padding: 10px;
+/* Hero Section */
+.hero-section {
+    min-height: 70vh;
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    background: var(--color-background);
+    /* Se mueve el flex a la clase .active para que no anule el display:none */
 }
-
-.collage-item:hover .overlay {
-    opacity: 1;
-}
-
-/* Estilos adicionales para modo oscuro */
-.dark-mode .collage-item {
-    border-color: var(--color-border); /* Borde en modo oscuro */
-}
-
-.dark-mode .overlay {
-    background: rgba(0, 0, 0, 0.8); /* Overlay más oscuro en modo oscuro */
-}
-
-.music-collage {
-    position: relative;
+.hero-section.active {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
-.collage-images {
+.hero-content {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.collage-images img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+.hero-title {
+    font-size: 3.5rem;
+    color: var(--color-primary);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 }
 
-.collage-images img:hover {
-    transform: scale(1.1);
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.counter-box {
+    background: rgba(255, 192, 203, 0.2);
+    border: 2px dashed var(--color-primary);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+}
+
+#daysCount {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* Animación Latido (Heartbeat) */
+.heartbeat-container {
+    margin-bottom: 10px;
+}
+
+.heartbeat {
+    animation: heartbeat 1.5s infinite;
+    filter: drop-shadow(0 0 10px rgba(233, 30, 99, 0.4));
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
+}
+
+/* Animación Pulse Botón */
+.btn-pulse {
+    animation: pulseButton 2s infinite;
+}
+
+@keyframes pulseButton {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(233, 30, 99, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(233, 30, 99, 0); }
+}
+
+/* Animación Glow (Brillo) */
+.btn-glow {
+    background: linear-gradient(45deg, var(--color-primary), #ff4081, var(--color-primary));
+    background-size: 200% 200%;
+    animation: gradientMove 3s ease infinite, pulseButton 2s infinite;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    padding: 1rem 2rem;
+    color: white;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Estilos para la tarjeta de música */
@@ -694,16 +746,24 @@ main {
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     overflow: hidden;
-    max-width: 300px;
-    margin: 20px auto;
+    width: 100%; /* El tamaño lo dicta el grid master */
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--color-background);
     color: var(--color-text);
 }
 
+.music-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Forza siempre portadas cuadradas del mismo tamaño sin importar origen */
+    overflow: hidden;
+}
+
 .music-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover; /* Evita que crezcan alargadas de forma diferente */
     display: block;
 }
 
@@ -776,12 +836,7 @@ audio {
     }
 
     .sorpresa-content {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: var(--color-background);
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-radius);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 1.5rem;
     }
 
     .sorpresa-content img {
@@ -790,9 +845,7 @@ audio {
     }
 
     .sorpresa-content p {
-        font-size: 1.2em;
         color: var(--color-text);
-        margin-top: 10px;
         animation: fadeIn 0.5s ease;
     }
 
@@ -800,35 +853,160 @@ audio {
         from { opacity: 0; }
         to { opacity: 1; }
     }
-    
 
-
-
-
-
-/* Responsividad */
-@media (max-width: 768px) {
-
-    .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .sidebar.active {
-        transform: translateX(0);
-    }
-
-    main {
-        margin-left: 0;
-        padding-top: 80px; /* Espacio para el botón de hamburguesa */
-    }
-
-    .hamburger-button {
-        display: flex; /* Mostrar en móviles */
-    }
-
+/* ==== Estilos de la Carta Romántica ==== */
+.carta-romantica {
+    /* Fondo, padding y shadow unificados por .content-section */
+    color: var(--color-text);
+    text-align: left;
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
 }
 
-@media  (max-width: 1023px){
+.carta-romantica h3 {
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-family: inherit;
+}
+
+/* Imagen en carta removida por petición del usuario, se dejan estilos base por si añade otra a futuro */
+.carta-romantica img {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 1.5rem auto;
+    display: none;
+}
+
+.carta-romantica p {
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+}
+
+.carta-romantica .firma {
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--color-primary);
+    margin-top: 2.5rem;
+    font-size: 1.3rem;
+}
+
+/* Modo oscuro de carta manejado nativamente por la herencia de .content-section */
+
+/* ==== Imagen Corazón (Clip-Path) ==== */
+.profile-heart {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    clip-path: url(#heart-clip);
+    -webkit-clip-path: url(#heart-clip);
+    margin: 0 auto;
+    display: block;
+    border: none;
+}
+
+/* ==== MODALES (Lightbox & Audio) ==== */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    padding-top: 50px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 20px rgba(255,192,203, 0.5);
+    animation: zoom 0.4s ease;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10000;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Audio Modal Specifics */
+.audio-modal-content {
+    width: 90%;
+    max-width: 600px;
+    background: #111;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: center;
+    border: 2px solid var(--color-primary);
+}
+
+#audio-visualizer {
+    width: 100%;
+    height: 150px;
+    border-radius: var(--border-radius);
+    background: #000;
+}
+
+.audio-controls {
+    margin-top: 20px;
+}
+
+.audio-controls h3 {
+    color: #fff;
+    margin-bottom: 5px;
+}
+.audio-controls p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.audio-buttons button {
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: transform 0.2s;
+}
+
+.audio-buttons button:active {
+    transform: scale(0.9);
+}
+
+/* Responsividad Unificada */
+@media (max-width: 1023px) {
     .sidebar {
         transform: translateX(-100%);
     }
@@ -839,10 +1017,19 @@ audio {
 
     main {
         margin-left: 0;
-        padding-top: 80px; /* Espacio para el botón de hamburguesa */
+        padding-top: 80px;
     }
 
     .hamburger-button {
-        display: flex; /* Mostrar en móviles */
+        display: flex;
+    }
+    
+    .content-section {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
     }
 }

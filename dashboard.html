@@ -1,373 +1,457 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luis ❤️ Yamileth</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Canvas Confetti para la cuponera -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
+<body>
+    <!-- Aurora background blobs -->
+    <div class="aurora-bg">
+        <div class="aurora-orb aurora-1"></div>
+        <div class="aurora-orb aurora-2"></div>
+        <div class="aurora-orb aurora-3"></div>
+    </div>
 
-<body class="dashboard">
-    <div id="particles-js" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;"></div>
-    <!-- Botón de Hamburguesa -->
-    <button id="sidebarToggle" class="hamburger-button">
+    <!-- Partículas de corazones flotantes -->
+    <div id="particles-js"></div>
+
+    <!-- Botón de Hamburguesa para móvil -->
+    <button id="sidebarToggle" class="hamburger-button" title="Menú">
         <i class="ri-menu-4-line"></i>
     </button>
-    <!-- Botón de cerrar Sesion -->
-    <button id="logoutButton" title="Cerra Sesion">
-        <i class="ri-logout-circle-line"></i>
-    </button>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h1 class="titulo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff"
-                fill="none">
-                <path
-                    d="M5.18007 15.2964C3.92249 16.0335 0.625213 17.5386 2.63348 19.422C3.6145 20.342 4.7071 21 6.08077 21H13.9192C15.2929 21 16.3855 20.342 17.3665 19.422C19.3748 17.5386 16.0775 16.0335 14.8199 15.2964C11.8709 13.5679 8.12906 13.5679 5.18007 15.2964Z"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M14 7C14 9.20914 12.2091 11 10 11C7.79086 11 6 9.20914 6 7C6 4.79086 7.79086 3 10 3C12.2091 3 14 4.79086 14 7Z"
-                    stroke="currentColor" stroke-width="1.5" />
-                <path
-                    d="M16.7612 3.27615C17.5657 2.81923 18.2679 3.00336 18.6897 3.29667C18.8626 3.41693 18.9491 3.47706 19 3.47706C19.0509 3.47706 19.1374 3.41693 19.3103 3.29667C19.7321 3.00336 20.4343 2.81923 21.2388 3.27615C22.2946 3.87582 22.5335 5.85413 20.0981 7.52315C19.6343 7.84105 19.4024 8 19 8C18.5976 8 18.3657 7.84105 17.9019 7.52315C15.4665 5.85413 15.7054 3.87582 16.7612 3.27615Z"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-            </svg> Luis ❤️ Yamileth
-        </h1>
-        <nav id="nav">
-            <ul>
-                <!-- 1. Inicio -->
-                <li><a href="#inicio" class="active">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            color="#ffffff" fill="none">
-                            <path
-                                d="M15.0002 17C14.2007 17.6224 13.1504 18 12.0002 18C10.8499 18 9.79971 17.6224 9.00018 17"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                            <path
-                                d="M2.35157 13.2135C1.99855 10.9162 1.82204 9.76763 2.25635 8.74938C2.69065 7.73112 3.65421 7.03443 5.58132 5.64106L7.02117 4.6C9.41847 2.86667 10.6171 2 12.0002 2C13.3832 2 14.5819 2.86667 16.9792 4.6L18.419 5.64106C20.3462 7.03443 21.3097 7.73112 21.744 8.74938C22.1783 9.76763 22.0018 10.9162 21.6488 13.2135L21.3478 15.1724C20.8473 18.4289 20.5971 20.0572 19.4292 21.0286C18.2613 22 16.5538 22 13.139 22H10.8614C7.44652 22 5.73909 22 4.57118 21.0286C3.40327 20.0572 3.15305 18.4289 2.65261 15.1724L2.35157 13.2135Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                        </svg> Inicio</a>
-                </li>
-                <!-- 2. Recuerdos -->
-                <li><a href="#recuerdos">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            color="#ffffff" fill="none">
-                            <path
-                                d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        </svg> Recuerdos</a>
-                </li>
-                <!-- 3. Frases -->
-                <li><a href="#frases">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            color="#ffffff" fill="none">
-                            <path d="M8.5 14.5H15.5M8.5 9.5H12" stroke="currentColor" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M14.1706 20.8905C18.3536 20.6125 21.6856 17.2332 21.9598 12.9909C22.0134 12.1607 22.0134 11.3009 21.9598 10.4707C21.6856 6.22838 18.3536 2.84913 14.1706 2.57107C12.7435 2.47621 11.2536 2.47641 9.8294 2.57107C5.64639 2.84913 2.31441 6.22838 2.04024 10.4707C1.98659 11.3009 1.98659 12.1607 2.04024 12.9909C2.1401 14.536 2.82343 15.9666 3.62791 17.1746C4.09501 18.0203 3.78674 19.0758 3.30021 19.9978C2.94941 20.6626 2.77401 20.995 2.91484 21.2351C3.05568 21.4752 3.37026 21.4829 3.99943 21.4982C5.24367 21.5285 6.08268 21.1757 6.74868 20.6846C7.1264 20.4061 7.31527 20.2668 7.44544 20.2508C7.5756 20.2348 7.83177 20.3403 8.34401 20.5513C8.8044 20.7409 9.33896 20.8579 9.8294 20.8905C11.2536 20.9852 12.7435 20.9854 14.1706 20.8905Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                        </svg> Frases</a>
-                </li>
-                <!-- 4. Canciones -->
-                <li><a href="#canciones">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            color="#ffffff" fill="none">
-                            <path
-                                d="M7 9.5C7 10.8807 5.88071 12 4.5 12C3.11929 12 2 10.8807 2 9.5C2 8.11929 3.11929 7 4.5 7C5.88071 7 7 8.11929 7 9.5ZM7 9.5V2C7.33333 2.5 7.6 4.6 10 5"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <circle cx="10.5" cy="19.5" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                            <circle cx="20" cy="18" r="2" stroke="currentColor" stroke-width="1.5" />
-                            <path
-                                d="M13 19.5L13 11C13 10.09 13 9.63502 13.2466 9.35248C13.4932 9.06993 13.9938 9.00163 14.9949 8.86504C18.0085 8.45385 20.2013 7.19797 21.3696 6.42937C21.6498 6.24509 21.7898 6.15295 21.8949 6.20961C22 6.26627 22 6.43179 22 6.76283V17.9259"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path d="M13 13C17.8 13 21 10.6667 22 10" stroke="currentColor" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg> Canciones</a>
-                </li>
-                <!-- 5. Sorpresa -->
-                <li><a href="#sorpresas">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            color="#ffffff" fill="none">
-                            <path
-                                d="M4 11V15C4 18.2998 4 19.9497 5.02513 20.9749C6.05025 22 7.70017 22 11 22H13C16.2998 22 17.9497 22 18.9749 20.9749C20 19.9497 20 18.2998 20 15V11"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M3 9C3 8.25231 3 7.87846 3.20096 7.6C3.33261 7.41758 3.52197 7.26609 3.75 7.16077C4.09808 7 4.56538 7 5.5 7H18.5C19.4346 7 19.9019 7 20.25 7.16077C20.478 7.26609 20.6674 7.41758 20.799 7.6C21 7.87846 21 8.25231 21 9C21 9.74769 21 10.1215 20.799 10.4C20.6674 10.5824 20.478 10.7339 20.25 10.8392C19.9019 11 19.4346 11 18.5 11H5.5C4.56538 11 4.09808 11 3.75 10.8392C3.52197 10.7339 3.33261 10.5824 3.20096 10.4C3 10.1215 3 9.74769 3 9Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            <path
-                                d="M6 3.78571C6 2.79949 6.79949 2 7.78571 2H8.14286C10.2731 2 12 3.7269 12 5.85714V7H9.21429C7.43908 7 6 5.56091 6 3.78571Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            <path
-                                d="M18 3.78571C18 2.79949 17.2005 2 16.2143 2H15.8571C13.7269 2 12 3.7269 12 5.85714V7H14.7857C16.5609 7 18 5.56091 18 3.78571Z"
-                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            <path d="M12 11L12 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg> Sorpresas</a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
-    <!-- Contenido Principal -->
-    <main>
-        <button id="toggleDarkMode" class="floating-button" title="Modo">
+    <!-- Botones flotantes (Modo Oscuro y Cerrar Sesión) -->
+    <div class="floating-actions-container">
+        <button id="toggleDarkMode" class="action-btn" title="Cambiar Tema">
             <i class="ri-sun-line"></i>
         </button>
+        <button id="logoutButton" class="action-btn" title="Cerrar Sesión">
+            <i class="ri-logout-circle-line"></i>
+        </button>
+    </div>
 
-        <!-- 1. INICIO IMPACTANTE -->
-        <section id="inicio" class="content-section active hero-section">
-            <div class="hero-content">
-                
-                <!-- SVG Clip Path para el corazón -->
-                <svg width="0" height="0" style="position: absolute;">
-                    <defs>
-                        <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
-                            <path d="M0.5 0.95 L0.42 0.88 C0.18 0.65 0.04 0.49 0.04 0.31 C0.04 0.17 0.14 0.05 0.28 0.05 C0.36 0.05 0.44 0.09 0.5 0.15 C0.56 0.09 0.64 0.05 0.72 0.05 C0.86 0.05 0.96 0.17 0.96 0.31 C0.96 0.49 0.82 0.65 0.58 0.88 L0.5 0.95 Z" />
-                        </clipPath>
-                    </defs>
-                </svg>
-
-                <div class="heartbeat-container">
-                    <!-- La imagen ahora toma la forma del corazón y late! -->
-                    <img src="assets/img/foto5.png" alt="Nosotros" class="heartbeat profile-heart">
-                </div>
-                
-                <h2 class="hero-title">¡Feliz 14 de Febrero, Mi Amor!</h2>
-                <p class="hero-subtitle">Mi lugar favorito en el mundo es contigo.</p>
-                <div class="counter-box">
-                    <p id="daysCount"></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. RECUERDOS -->
-        <section id="recuerdos" class="content-section">
-            <h2>Nuestros Recuerdos</h2>
-            <p>Aquí puedes ver nuestros momentos más especiales, los instantes que quiero guardar para siempre.</p>
-            
-            <!-- Galería de Fotos (Ajustada 3-3-3 - FOTOS ÚNICAS) -->
-            <div class="gallery gallery-recuerdos-v3">
-                <div class="gallery-item">
-                    <img src="assets/img/foto1.png" alt="Recuerdo 1">
-                    <div class="gallery-description"><p>Momento Especial ✨</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto2.png" alt="Recuerdo 2">
-                    <div class="gallery-description"><p>Día Inolvidable ❤️</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto3.png" alt="Recuerdo 3">
-                    <div class="gallery-description"><p>Risas y Amor 😂</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto4.png" alt="Recuerdo 4">
-                    <div class="gallery-description"><p>Juntos por Siempre 💍</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto5.png" alt="Recuerdo 5">
-                    <div class="gallery-description"><p>Nuestra Aventura 🌟</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto6.png" alt="Recuerdo 6">
-                    <div class="gallery-description"><p>Felicidad 🕊️</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto7.png" alt="Recuerdo 7">
-                    <div class="gallery-description"><p>Te Amo 😍</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto8.png" alt="Recuerdo 8">
-                    <div class="gallery-description"><p>Nuestro Mundo 🌍</p></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assets/img/foto1.png" alt="Recuerdo 9">
-                    <div class="gallery-description"><p>Infinito ❤️</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. FRASES O POEMAS -->
-        <section id="frases" class="content-section">
-            <h2>Palabras para Ti</h2>
-            <div class="mensaje-container">
-                <p id="mensaje-texto">Porque cada día a tu lado es un regalo...</p>
-                <button id="nuevo-mensaje-btn" class="btn-pulse">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ffffff"
-                        fill="none">
-                        <path
-                            d="M12.5 2.01175C12.3344 2.00395 12.1677 2 12 2C6.47778 2 2 6.28357 2 11.5667C2 14.1051 3.03333 16.4115 4.71889 18.1231C5.09 18.5 5.33778 19.0148 5.23778 19.5448C5.07275 20.4112 4.69874 21.2194 4.15111 21.893C5.59195 22.161 7.09014 21.9197 8.37499 21.2364C8.82918 20.9949 9.05627 20.8741 9.21653 20.8496C9.37678 20.8251 9.60633 20.8682 10.0654 20.9545C10.7032 21.0742 11.3507 21.1343 12 21.1334C17.5222 21.1334 22 16.8499 22 11.5667C22 11.3765 21.9942 11.1875 21.9827 11"
-                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M15 5.5H22M18.5 2L18.5 9" stroke="currentColor" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M11.9955 12H12.0045M15.991 12H16M8 12H8.00897" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg> Leer más frases
-                </button>
-            </div>
-        </section>
-
-        <!-- 4. CANCIONES -->
-        <section id="canciones" class="content-section">
-            <h2>Nuestra Banda Sonora</h2>
-            <p>Las canciones que me recuerdan a ti y a nuestra historia.</p>
-            <div class="music-container">
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto2.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>Por eso Te Amo</h3>
-                        <p>Rio Roma</p>
-                        <p>Por eso yo te amo ❤</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Río Roma - Por Eso Te Amo.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto5.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>Amor de Febrero</h3>
-                        <p>Jay Wheeler</p>
-                        <p>Amor de febrero 2025</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Jay Wheeler - Amor de Febrero.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto8.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>Como Tú</h3>
-                        <p>Kelvin Montenegro</p>
-                        <p>Como Tú</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Kelvin Montenegro - Como Tú.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto7.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>Contigo</h3>
-                        <p>Andrey Serrano</p>
-                        <p>Contigo el 2025</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Andrey Serrano - Contigo el 2025.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-                <!-- Card 5 -->
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto4.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>En Guerra</h3>
-                        <p>Sebastián Yatra, Camilo</p>
-                        <p>A tu lado 🌟</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Sebastián Yatra, Camilo - En Guerra.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-                <!-- Card 6 -->
-                <div class="music-card">
-                    <div class="music-image">
-                        <img src="assets/img/foto6.png" alt="Portada del álbum">
-                    </div>
-                    <div class="music-info">
-                        <h3>Ojitos Lindos</h3>
-                        <p>Bad Bunny</p>
-                        <p>Mirada perfecta 👀</p>
-                    </div>
-                    <div class="music-controls">
-                        <audio controls>
-                            <source src="assets/music/Bad Bunny - Ojitos Lindos.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. SORPRESA -->
-        <section id="sorpresas" class="content-section">
-            <h2>Un Detalle Final</h2>
-            <p>Porque este 14 de febrero quería darte algo hecho con mucho amor.</p>
-            <div class="sorpresa-container">
-                <button id="sorpresa-btn" class="sorpresa-btn btn-glow btn-pulse">
-                    <i class="ri-heart-3-fill"></i> ¡Descubre tu Sorpresa!
-                </button>
-                <div id="sorpresa-content" class="sorpresa-content hidden">
-                    <div class="carta-romantica">
-                        <h3>Para el amor de mi vida</h3>
-                        <p>Feliz Día del Amor y la Amistad. Me cuesta encontrar las palabras exactas para describir todo lo que me haces sentir, porque ni el diccionario más extenso del mundo alcanzaría para explicar la magnitud de mi amor por ti. Hoy, en este 14 de febrero, quiero tomarme un instante para darte las gracias desde lo más profundo de mi corazón.</p>
-
-                        <p>Llegaste a mi vida como un rayo de luz, iluminando hasta los rincones que yo mismo había olvidado. Me enseñaste que el amor no se trata de perfección, sino de encontrar a esa persona que hace que absolutamente todo valga la pena. Cada sonrisa que me dedicas, cada vez que me tomas de la mano y me dices que todo estará bien, me confirman que eres mi hogar.</p>
-
-                        <p>Quiero agradecerte por tu paciencia infinita, por escucharme cuando más lo necesito y por creer en mí incluso cuando yo dudo de mis propias capacidades. Me has regalado una confianza inquebrantable, esa que solo nace cuando sabes que estás con alguien que jamás te dejará caer. En tus brazos he encontrado mi refugio de paz, el único lugar en el que puedo ser yo mismo al cien por ciento.</p>
-
-                        <p>Amo la forma en la que vemos el mundo juntos. Amo nuestras aventuras espontáneas, nuestras risas sin sentido por la madrugada, e incluso los silencios compartidos que no necesitan palabras porque nuestros corazones y almas se entienden a la perfección. Contigo aprendí que el amor de verdad construye, sana, respeta y siempre elige quedarse. No importa cuántos años pasen ni cuántos 14 de febrero celebremos; sé que mi mirada siempre te buscará a ti en medio de cualquier multitud.</p>
-
-                        <p>Te prometo mi lealtad entera, cuidarte cada día de este hermoso viaje llamado vida y esforzarme por ser la mejor versión de mí. Eres mi presente, mi futuro soñado y la persona por la que daría absolutamente todo. Gracias por elegirme todos los días. Te amo infinitamente y por siempre.</p>
-                        
-                        <p class="firma">Con todo el amor del mundo, yo.💕🎉🎂</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Modales Dinámicos -->
+    <!-- Contenedor general del Dashboard -->
+    <div class="dashboard-container">
         
-        <!-- Lightbox Fotos -->
-        <div id="lightbox-modal" class="modal">
-            <span class="close-modal" id="close-lightbox">&times;</span>
-            <img class="modal-content" id="lightbox-img">
-        </div>
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="ri-heart-pulse-fill" style="font-size: 1.8rem; color: var(--color-primary);"></i>
+                <h1>Luis ❤️ Yamileth</h1>
+            </div>
+            
+            <nav id="nav">
+                <ul>
+                    <li><a href="#inicio" class="active"><i class="ri-home-heart-line"></i> Inicio</a></li>
+                    <li><a href="#recuerdos"><i class="ri-gallery-line"></i> Recuerdos</a></li>
+                    <li><a href="#timeline"><i class="ri-history-line"></i> Nuestra Historia</a></li>
+                    <li><a href="#canciones"><i class="ri-music-2-line"></i> Canciones</a></li>
+                    <li><a href="#cupones"><i class="ri-ticket-2-line"></i> Vales de Amor</a></li>
+                    <li><a href="#sorpresas"><i class="ri-mail-open-line"></i> Carta Sorpresa</a></li>
+                </ul>
+            </nav>
 
-        <!-- Reproductor Web Audio API -->
-        <div id="audio-modal" class="modal">
-            <span class="close-modal" id="close-audio">&times;</span>
-            <div class="audio-modal-content">
-                <!-- Canvas Visualizador (Ondas Simuladas Fluídas) -->
-                <canvas id="audio-visualizer"></canvas>
-                <div class="audio-controls">
+            <div class="sidebar-footer">
+                <p style="font-size: 0.8rem; color: var(--color-text-muted); text-align: center;">Hecho con ❤️ para ti</p>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main>
+            
+            <!-- SVG Clip Path para el corazón de la foto de perfil -->
+            <svg width="0" height="0" style="position: absolute;">
+                <defs>
+                    <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+                        <path d="M0.5 0.95 L0.42 0.88 C0.18 0.65 0.04 0.49 0.04 0.31 C0.04 0.17 0.14 0.05 0.28 0.05 C0.36 0.05 0.44 0.09 0.5 0.15 C0.56 0.09 0.64 0.05 0.72 0.05 C0.86 0.05 0.96 0.17 0.96 0.31 C0.96 0.49 0.82 0.65 0.58 0.88 L0.5 0.95 Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+            <!-- 1. SECCIÓN INICIO -->
+            <section id="inicio" class="content-section active hero-section">
+                <div class="heartbeat-container">
+                    <div class="heart-glow"></div>
+                    <img src="assets/img/foto5.png" alt="Nosotros" class="profile-heart">
+                </div>
+                
+                <h2>¡Feliz 14 de Febrero, Mi Amor!</h2>
+                <p class="hero-subtitle-top">"Mi lugar favorito en el mundo es a tu lado."</p>
+                
+                <div class="counter-box">
+                    <p id="daysCount">Cargando nuestro tiempo juntos...</p>
+                </div>
+
+                <!-- Pensamientos y Frases del día -->
+                <div class="mensaje-container" style="margin-top: 2.5rem; background: var(--color-glass-bg); border: 1.5px dashed var(--color-primary); padding: 2rem; border-radius: var(--border-radius-md); max-width: 600px; width: 100%;">
+                    <p id="mensaje-texto" style="font-family: var(--font-serif); font-size: 1.25rem; font-style: italic; margin-bottom: 1.2rem; color: var(--color-text);">"Cargando un pensamiento de amor para ti..."</p>
+                </div>
+            </section>
+
+            <!-- 2. SECCIÓN RECUERDOS -->
+            <section id="recuerdos" class="content-section">
+                <h2 class="section-title">Nuestros Recuerdos</h2>
+                <p class="section-subtitle">Pasa el cursor sobre cada foto para ver nuestro mensaje especial, y haz clic para ampliarla. ❤️</p>
+                
+                <div class="gallery gallery-recuerdos-v3">
+                    <!-- Recuerdo 1 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto1.png" alt="Recuerdo 1">
+                        <div class="gallery-description">
+                            <h4>Cuando empezamos</h4>
+                            <p>Ese día que todo cambió para siempre. ❤️</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 2 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto2.png" alt="Recuerdo 2">
+                        <div class="gallery-description">
+                            <h4>Risas de sobra</h4>
+                            <p>Una salida contigo siempre me llena de alegría. 😂</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 3 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto3.png" alt="Recuerdo 3">
+                        <div class="gallery-description">
+                            <h4>Complicidad única</h4>
+                            <p>Amo cómo compartimos las mismas locuras. 🌟</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 4 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto4.png" alt="Recuerdo 4">
+                        <div class="gallery-description">
+                            <h4>Mi refugio</h4>
+                            <p>Estar entre tus brazos es mi lugar favorito. 🥰</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 5 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto5.png" alt="Recuerdo 5">
+                        <div class="gallery-description">
+                            <h4>Nuestra Aventura</h4>
+                            <p>Cada paseo de tu mano es mi parte favorita. 🗺️</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 6 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto6.png" alt="Recuerdo 6">
+                        <div class="gallery-description">
+                            <h4>Tu sonrisa</h4>
+                            <p>Verte feliz es mi mayor logro de cada día. 😍</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 7 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto7.png" alt="Recuerdo 7">
+                        <div class="gallery-description">
+                            <h4>Te Amo</h4>
+                            <p>Si tuviera que elegir, te elegiría mil veces. 💕</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 8 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto8.png" alt="Recuerdo 8">
+                        <div class="gallery-description">
+                            <h4>Juntos ante todo</h4>
+                            <p>Tú y yo formamos el mejor equipo del mundo. 🤝</p>
+                        </div>
+                    </div>
+                    <!-- Recuerdo 9 -->
+                    <div class="gallery-item">
+                        <img src="assets/img/foto1.png" alt="Recuerdo 9">
+                        <div class="gallery-description">
+                            <h4>Por Siempre</h4>
+                            <p>Un amor infinito, paciente y eterno. ♾️</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SECCIÓN NUESTRA HISTORIA (Timeline) -->
+            <section id="timeline" class="content-section">
+                <h2 class="section-title">Nuestra Historia</h2>
+                <p class="section-subtitle">Un recorrido por los hitos más hermosos de nuestra vida juntos.</p>
+                
+                <div class="timeline-container">
+                    <!-- Hito 1 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-badge"><i class="ri-message-3-fill"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">El Inicio</span>
+                            <h3>El Primer Mensaje</h3>
+                            <p>Ese pequeño "hola" casual que envió un chispazo al destino e inició la conversación más hermosa e importante de toda mi vida.</p>
+                        </div>
+                    </div>
+                    <!-- Hito 2 -->
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-badge"><i class="ri-cup-fill"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Primer Encuentro</span>
+                            <h3>Nuestra Primera Cita</h3>
+                            <p>Los nervios corriendo por nuestras venas, las risas tímidas y esa bonita sensación de saber que queríamos vernos mil veces más.</p>
+                        </div>
+                    </div>
+                    <!-- Hito 3 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-badge"><i class="ri-heart-pulse-fill"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">La Propuesta</span>
+                            <h3>El Gran "Sí"</h3>
+                            <p>Cuando decidimos formalizar este amor y empezar a caminar de la mano de manera oficial. El inicio de nuestro aniversario.</p>
+                        </div>
+                    </div>
+                    <!-- Hito 4 -->
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-badge"><i class="ri-compass-3-fill"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Aventuras</span>
+                            <h3>Nuestros Viajes y Paseos</h3>
+                            <p>Cada escapada de fin de semana, cada foto graciosa en la calle y cada comida compartida que nos unió aún más.</p>
+                        </div>
+                    </div>
+                    <!-- Hito 5 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-badge"><i class="ri-shield-user-fill"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Fuerza</span>
+                            <h3>Superando Obstáculos</h3>
+                            <p>Porque el amor no es solo cuando todo es fácil; es cuando decidimos apoyarnos, escucharnos y salir adelante juntos en los momentos difíciles.</p>
+                        </div>
+                    </div>
+                    <!-- Hito 6 -->
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-badge"><i class="ri-infinity-line"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">El Presente y Futuro</span>
+                            <h3>Sueños por Cumplir</h3>
+                            <p>Seguimos construyendo, aprendiendo y soñando despiertos con todo lo hermoso que el futuro nos depara. ¡Te amo infinitamente!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SECCIÓN CANCIONES (Vinyl) -->
+            <section id="canciones" class="content-section">
+                <h2 class="section-title">Nuestra Banda Sonora</h2>
+                <p class="section-subtitle">Las canciones que me recuerdan a ti y a nuestra hermosa historia de amor.</p>
+                
+                <div class="music-grid">
+                    <!-- Song 1 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto2.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>Por eso Te Amo</h3>
+                            <p>Río Roma</p>
+                            <button class="listen-btn" data-src="assets/music/Río Roma - Por Eso Te Amo.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Song 2 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto5.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>Amor de Febrero</h3>
+                            <p>Jay Wheeler</p>
+                            <button class="listen-btn" data-src="assets/music/Jay Wheeler - Amor de Febrero.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Song 3 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto8.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>Como Tú</h3>
+                            <p>Kelvin Montenegro</p>
+                            <button class="listen-btn" data-src="assets/music/Kelvin Montenegro - Como Tú.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Song 4 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto7.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>Contigo</h3>
+                            <p>Andrey Serrano</p>
+                            <button class="listen-btn" data-src="assets/music/Andrey Serrano - Contigo el 2025.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Song 5 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto4.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>En Guerra</h3>
+                            <p>S. Yatra, Camilo</p>
+                            <button class="listen-btn" data-src="assets/music/Sebastián Yatra, Camilo - En Guerra.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Song 6 -->
+                    <div class="music-card">
+                        <div class="vinyl-container">
+                            <img src="assets/img/foto6.png" alt="Portada" class="vinyl-cover">
+                            <div class="vinyl-disc"></div>
+                        </div>
+                        <div class="music-details">
+                            <h3>Ojitos Lindos</h3>
+                            <p>Bad Bunny</p>
+                            <button class="listen-btn" data-src="assets/music/Bad Bunny - Ojitos Lindos.mp3">
+                                <i class="ri-play-circle-fill"></i> Escuchar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. SECCIÓN VALES DE AMOR (Coupons) -->
+            <section id="cupones" class="content-section">
+                <h2 class="section-title">Vales de Amor</h2>
+                <p class="section-subtitle">¡Para canjearlos cuando quieras! Haz clic en ellos cuando desees usarlos conmigo.</p>
+                
+                <div class="coupons-grid">
+                    <!-- Coupon 1 -->
+                    <div class="coupon-card" id="coupon-1">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-heart-pulse-fill"></i></div>
+                        <h3>Abrazo Infinito</h3>
+                        <p>Válido para un abrazo mega fuerte y cálido de esos que curan absolutamente cualquier mal día.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                    <!-- Coupon 2 -->
+                    <div class="coupon-card" id="coupon-2">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-restaurant-fill"></i></div>
+                        <h3>Cena Especial</h3>
+                        <p>Válido para una cena deliciosa preparada por mí, con tu comida favorita y tu postre preferido.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                    <!-- Coupon 3 -->
+                    <div class="coupon-card" id="coupon-3">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-film-fill"></i></div>
+                        <h3>Tarde de Pelis</h3>
+                        <p>Válido para un maratón completo de las películas o series que tú elijas, con palomitas ilimitadas.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                    <!-- Coupon 4 -->
+                    <div class="coupon-card" id="coupon-4">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-hand-heart-fill"></i></div>
+                        <h3>Masaje Relajante</h3>
+                        <p>Válido para un masaje en la espalda o pies para aliviar las tensiones de la semana.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                    <!-- Coupon 5 -->
+                    <div class="coupon-card" id="coupon-5">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-empathy-fill"></i></div>
+                        <h3>Perdón Instantáneo</h3>
+                        <p>Válido para resolver cualquier pequeño enojo o desacuerdo de forma dulce con un beso.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                    <!-- Coupon 6 -->
+                    <div class="coupon-card" id="coupon-6">
+                        <div class="redeemed-stamp">¡Canjeado!</div>
+                        <div class="coupon-icon"><i class="ri-compass-3-fill"></i></div>
+                        <h3>Salida Sorpresa</h3>
+                        <p>Válido para planear una aventura a donde tú quieras. Yo organizo absolutamente todo el día.</p>
+                        <button class="coupon-btn">Canjear Vale</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. SECCIÓN CARTA SORPRESA (Envelope) -->
+            <section id="sorpresas" class="content-section envelope-section">
+                <h2 class="section-title">Un Detalle Especial</h2>
+                <p class="section-subtitle">He guardado mis palabras más sinceras dentro de este sobre. Haz clic en el sello para abrirlo.</p>
+                
+                <div class="envelope-wrapper" id="envelopeWrapper">
+                    <div class="envelope">
+                        <div class="envelope-flap"></div>
+                        <div class="heart-seal" id="heartSeal"></div>
+                        
+                        <div class="envelope-letter" id="envelopeLetter">
+                            <h3>Para el amor de mi vida...</h3>
+                            <p id="typewriter-text">Feliz Día del Amor y la Amistad. Me cuesta encontrar las palabras exactas para describir todo lo que me haces sentir, porque ni el diccionario más extenso del mundo alcanzaría para explicar la magnitud de mi amor por ti. Hoy, en este 14 de febrero, quiero tomarme un instante para darte las gracias desde lo más profundo de mi corazón.
+
+                            Llegaste a mi vida como un rayo de luz, iluminando hasta los rincones que yo mismo había olvidado. Me enseñaste que el amor no se trata de perfección, sino de encontrar a esa persona que hace que absolutamente todo valga la pena. Cada sonrisa que me dedicas, cada vez que me tomas de la mano y me dices que todo estará bien, me confirman que eres mi hogar.
+
+                            Quiero agradecerte por tu paciencia infinita, por escucharme cuando más lo necesito y por creer en mí incluso cuando yo dudo de mis propias capacidades. Me has regalado una confianza inquebrantable, esa que solo nace cuando sabes que estás con alguien que jamás te dejará caer. En tus brazos he encontrado mi refugio de paz, el único lugar en el que puedo ser yo mismo al cien por ciento.
+
+                            Amo la forma en la que vemos el mundo juntos. Amo nuestras aventuras espontáneas, nuestras risas sin sentido por la madrugada, e incluso los silencios compartidos que no necesitan palabras porque nuestros corazones y almas se entienden a la perfección. Contigo aprendí que el amor de verdad construye, sana, respeta y siempre elige quedarse. No importa cuántos años pasen ni cuántos 14 de febrero celebremos; sé que mi mirada siempre te buscará a ti en medio de cualquier multitud.
+
+                            Te prometo mi lealtad entera, cuidarte cada día de este hermoso viaje llamado vida y esforzarme por ser la mejor versión de mí. Eres mi presente, mi futuro soñado y la persona por la que daría absolutamente todo. Gracias por elegirme todos los días. Te amo infinitamente y por siempre.</p>
+                            <p class="firma">Con todo el amor del mundo, yo. ❤️</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="envelope-hint" id="envelopeHint">
+                    <i class="ri-mail-unread-fill"></i> ¡Haz clic en el corazón para abrir la carta!
+                </div>
+            </section>
+
+            <!-- Lightbox Modal para fotos Polaroid -->
+            <div id="lightbox-modal" class="modal">
+                <span class="close-modal" id="close-lightbox">&times;</span>
+                <img class="modal-content" id="lightbox-img" alt="Foto Ampliada">
+            </div>
+
+            <!-- Modal del Reproductor de Música -->
+            <div id="audio-modal" class="modal">
+                <div class="audio-modal-content">
+                    <span class="close-modal" id="close-audio">&times;</span>
+                    
+                    <div class="audio-modal-disc"></div>
+                    
                     <h3 id="audio-title">Cargando...</h3>
                     <p id="audio-artist">Artista</p>
+                    
+                    <canvas id="audio-visualizer"></canvas>
+                    
                     <audio id="modal-audio-player"></audio>
-                    <div class="audio-buttons">
-                        <button id="audio-play-pause"><i class="ri-pause-circle-fill"></i></button>
+                    
+                    <div class="audio-controls">
+                        <button id="audio-play-pause" class="audio-btn" title="Reproducir/Pausar">
+                            <i class="ri-pause-fill"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
+        </main>
+    </div>
+
+    <!-- Script principal del dashboard -->
     <script src="script/dashboard.js"></script>
 </body>
-
 </html>

@@ -281,7 +281,25 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
-
+// --- 9.5 Resetear Vales de Amor ---
+const resetBtn = document.getElementById('resetCouponsBtn');
+if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+        // Limpiar estado en localStorage
+        couponCards.forEach(card => {
+            const couponId = card.id;
+            localStorage.removeItem(couponId);
+            card.classList.remove('redeemed');
+            const btn = card.querySelector('.coupon-btn');
+            if (btn) {
+                btn.textContent = 'Canjear Vale';
+                btn.disabled = false;
+            }
+        });
+        alert('Todos los vales han sido reiniciados.');
+    });
+}
+// --- 10. SOBRE DE CARTA INTERACTIVO & TYPEWRITER ---
     // --- 10. SOBRE DE CARTA INTERACTIVO & TYPEWRITER ---
     const envelopeWrapper = document.getElementById("envelopeWrapper");
     const envelopeLetter = document.getElementById("envelopeLetter");
